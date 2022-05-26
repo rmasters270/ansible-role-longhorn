@@ -1,0 +1,12 @@
+---
+
+- name: Install Longhorn prerequisite packages
+  ansible.builtin.apt:
+    name: open-iscsi, nfs-common
+    cache_valid_time: 600
+    update_cache: true
+
+- name: Start iscsi service
+  ansible.builtin.service:
+    name: iscsid
+    state: started

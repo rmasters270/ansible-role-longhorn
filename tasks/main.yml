@@ -1,0 +1,41 @@
+---
+
+- name: Add Longhorn repository
+  kubernetes.core.helm_repository:
+    name: '{{ longhorn_repository.name }}'
+    repo_url: '{{ longhorn_repository.url }}'
+
+- name: Deploy Longhorn Helm chart
+  kubernetes.core.helm:
+    name: longhorn
+    chart_ref: longhorn/longhorn
+    chart_version: '{{ longhorn_repository.version }}'
+    release_namespace: longhorn-system
+    create_namespace: true
+    update_repo_cache: true
+
+- name: Check for existing default storage class
+  ansible.builtin.shell:
+    cmd: kubectl get storageclass | grep default | grep -v longhorn | awk '{print $1}'
+  register: _default_storage_result
+  changed_when: false
+  when: longhorn_default_storage
+
+- name: Remove default storage class
+  ansible.builtin.command:
+    cmd: >-
+      kubectl patch storageclass {{ item }}
+      -p '{ "metadata": { "annotations":{ "storageclass.kubernetes.io/is-default-class":"false" }}}'
+  register: _remove_default_storage_result
+  changed_when: not '(no change)' in _remove_default_storage_result.stdout
+  with_items: '{{ _default_storage_result.stdout_lines }}'
+  when: longhorn_default_storage and _default_storage_result.stdout is defined
+
+- name: Set Longhorn default storage class
+  ansible.builtin.command:
+    cmd: >-
+      kubectl patch storageclass longhorn
+      -p '{ "metadata": { "annotations":{ "storageclass.kubernetes.io/is-default-class":"true" }}}'
+  register: _longhorn_default_storage_result
+  changed_when: not '(no change)' in _longhorn_default_storage_result.stdout
+  when: longhorn_default_storage
