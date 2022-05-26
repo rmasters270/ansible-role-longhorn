@@ -1,5 +1,6 @@
 galaxy_info:
   author: rmasters270
+  role_name: longhorn
   description: Install Longhorn Helm Chart
   company: none
   license: MIT
