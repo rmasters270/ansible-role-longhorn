@@ -6,4 +6,4 @@ longhorn_default_storage: false
 longhorn_repository:
   name: longhorn
   url: https://charts.longhorn.io
-  version: v1.2.4
+  version: 1.2.4
