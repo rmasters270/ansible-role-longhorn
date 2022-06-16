@@ -10,7 +10,7 @@
     name: longhorn
     chart_ref: longhorn/longhorn
     chart_version: '{{ longhorn_repo_version }}'
-    release_namespace: longhorn-system
+    release_namespace: '{{ longhorn_namespace }}'
     create_namespace: true
     update_repo_cache: true
 
