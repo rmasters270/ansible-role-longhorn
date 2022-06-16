@@ -2,14 +2,14 @@
 
 - name: Add Longhorn repository
   kubernetes.core.helm_repository:
-    name: '{{ longhorn_repository.name }}'
-    repo_url: '{{ longhorn_repository.url }}'
+    name: '{{ longhorn_repo_name }}'
+    repo_url: '{{ longhorn_repo_url }}'
 
 - name: Deploy Longhorn Helm chart
   kubernetes.core.helm:
     name: longhorn
     chart_ref: longhorn/longhorn
-    chart_version: '{{ longhorn_repository.version }}'
+    chart_version: '{{ longhorn_repo_version }}'
     release_namespace: longhorn-system
     create_namespace: true
     update_repo_cache: true
