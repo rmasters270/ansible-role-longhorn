@@ -2,11 +2,13 @@
 
 Install Longhorn on a Kubernetes cluster.
 
+[![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-longhorn-blue.svg)](https://galaxy.ansible.com/rmasters270/longhorn)
+
 ## Requirements
 
 ### Default Storage Class
 
-Longhorn will be set as the default storage class. The role can remove previously defined default StorageClasses, however, system StorageClasses will be reassigned to default after the cluster is rebooted.  To disable the local-storage class use `--no-deploy=local-storage` when installing k3s.
+Longhorn will be set as the default storage class. The role can remove previously defined default StorageClasses, however, system StorageClasses will be reassigned to default after the cluster is rebooted.  To disable the local-storage class use `--disable local-storage` when installing k3s.
 
 ### Localhost
 
@@ -22,37 +24,13 @@ The host must have the Helm package manager installed.
 
 ## Role Variables
 
-### longhorn_namespace
-
-Change the Kubernetes namespace for Longhorn.
-
-default: `longhorn`
-
-### longhorn_default_storage
-
-Longhorn will automatically be set as the default.  Change this value to `true` to insure Longhorn is the default and the default status is removed from all other StorageClasses.
-
-default: `false`
-
-### longhorn_repo_name
-
-Name of the Helm repository.
-
-default: `longhorn-system`
-
-### longhorn_repo_url
-
-Url pointing to the Helm repository.
-
-default: `https://charts.longhorn.io`
-
-### longhorn_repo_version
-
-Chart version in the repository.
-
-The default value is pinned to the latest version at the time of writing.  Use `helm search repo longhorn` to list all versions of the chart.
-
-default: `1.2.4`
+| Variable                | Required | Default                            | Comments                                    |
+|-------------------------|----------|------------------------------------|---------------------------------------------|
+| longhorn_namespace      | yes      | longhorn-system                    | Kubernetes namespace                        |
+| longhorn_repo_name      | yes      | longhorn                           | Helm repository name                        |
+| longhorn_repo_url       | yes      | <https://charts.longhorn.io>       | Helm repository URL                         |
+| longhorn_repo_version   | yes      | 1.3.0                              | Helm chart version                          |
+| longhorn_default_storage| yes      | false                              | Longhorn will automatically be set as the default.  Change this value to `true` to remove the the default status from other StorageClasses. System default storage classes will return after reboot. |
 
 ## Dependencies
 
