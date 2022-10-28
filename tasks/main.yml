@@ -14,6 +14,11 @@
     create_namespace: true
     update_repo_cache: true
 
+- name: Configure Longhorn backup target
+  kubernetes.core.k8s:
+    namespace: '{{ ddclient_namespace }}'
+    template: backup-target.yaml.j2
+
 - name: Check for existing default storage class
   ansible.builtin.shell:
     cmd: kubectl get storageclass | grep default | grep -v longhorn | awk '{print $1}'
