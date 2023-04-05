@@ -41,6 +41,11 @@ Setup `kube config` for the user account and host.
 ## Example Playbook
 
 ```yaml
+- hosts: k3s_nodes
+
+  roles:
+    - rmasters270.longhorn_node
+
 - hosts: localhost
 
   roles:
