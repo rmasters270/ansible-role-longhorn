@@ -1,4 +1,6 @@
-# Longhorn
+# DEPRECATED: Longhorn
+
+***This role will be depreciated use the collection, [rmasters270.kubernetes](https://github.com/rmasters270/ansible-collection-kubernetes).***
 
 Install Longhorn on a Kubernetes cluster.
 
